@@ -1,0 +1,55 @@
+
+/* Lab Inventory CSS */
+.column-resizer {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 5px;
+    height: 100%;
+    cursor: col-resize;
+    user-select: none;
+}
+
+.column-resizer.resizing {
+    background-color: #007bff;
+}
+
+.drop-zone {
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+    padding: 25px;
+    text-align: center;
+    margin-bottom: 20px;
+    transition: all 0.3s;
+}
+
+.drop-zone.dragover {
+    background-color: #f8f9fa;
+    border-color: #007bff;
+}
+
+.zoom-level-1 .table {
+    font-size: 0.7rem;
+}
+
+.zoom-level-2 .table {
+    font-size: 0.8rem;
+}
+
+.zoom-level-3 .table {
+    font-size: 0.9rem;
+}
+
+.zoom-level-4 .table {
+    font-size: 1rem;
+}
+
+.zoom-level-5 .table {
+    font-size: 1.1rem;
+}
+
+.action-buttons {
+    white-space: nowrap;
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Inventory </title>
+    
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+    <link href="css/labinventory.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        .navbar-brand img {
+            height: 40px;
+            width: auto;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <!-- Main Content -->
+    <div class="container-fluid mt-4">
+        <!-- Filtri -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Filtri</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label" for="filterTipologia">Tipologia</label>
+                        <select class="form-select" id="filterTipologia" aria-label="Filtro per tipologia">
+                            <option value="">Tutti</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label" for="filterFornitore">Fornitore</label>
+                        <select class="form-select" id="filterFornitore" aria-label="Filtro per fornitore">
+                            <option value="">Tutti</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label" for="filterStanza">Stanza</label>
+                        <select class="form-select" id="filterStanza" aria-label="Filtro per stanza">
+                            <option value="">Tutte</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label" for="filterZona">Zona</label>
+                        <select class="form-select" id="filterZona" aria-label="Filtro per zona">
+                            <option value="">Tutte</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label" for="filterRipiano">Ripiano</label>
+                        <select class="form-select" id="filterRipiano" aria-label="Filtro per ripiano">
+                            <option value="">Tutti</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label" for="filterScatola">Scatola</label>
+                        <select class="form-select" id="filterScatola" aria-label="Filtro per scatola">
+                            <option value="">Tutte</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label" for="filterQuantita">Quantità massima</label>
+                        <input type="number" class="form-control" id="filterQuantita" min="0" aria-label="Filtro per quantità massima">
+                    </div>
+                    <div class="col-md-12 d-flex align-items-end">
+                        <button class="btn btn-primary me-2" id="applyFilters">Applica Filtri</button>
+                        <button class="btn btn-secondary" id="resetFilters">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Barra di Ricerca -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-8">
+                        <label for="searchBox" class="visually-hidden">Cerca</label>
+                        <input type="text" class="form-control" id="searchBox" placeholder="Cerca...">
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="exactSearch">
+                            <label class="form-check-label" for="exactSearch">Ricerca esatta</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pulsanti di Azione -->
+        <div class="mb-4">
+            <button class="btn btn-success me-2" id="addNewItem">
+                <i class="fas fa-plus"></i> Aggiungi Articolo
+            </button>
+            <button class="btn btn-info me-2" id="importTxt">
+                <i class="fas fa-file-import"></i> Importa TXT
+            </button>
+            <button class="btn btn-secondary me-2" id="exportTsv">
+                <i class="fas fa-file-export"></i> Esporta TSV
+            </button>
+            <button class="btn btn-warning me-2" id="toggleEdit">
+                <i class="fas fa-edit"></i> Abilita Modifica
+            </button>
+            <div class="btn-group me-2">
+                <button class="btn btn-outline-secondary" id="zoomOut" title="Riduci dimensione">
+                    <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="btn btn-outline-secondary" id="zoomReset" title="Ripristina dimensione">
+                    <i class="fas fa-undo"></i>
+                </button>
+                <button class="btn btn-outline-secondary" id="zoomIn" title="Aumenta dimensione">
+                    <i class="fas fa-search-plus"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Tabella Inventario -->
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="inventoryTable" class="table table-striped table-bordered w-100">
+                        <thead>
+                            <tr>
+                                <th>Codice Articolo</th>
+                                <th>Oggetto</th>
+                                <th>Descrizione</th>
+                                <th>Fornitore</th>
+                                <th>Quantità Totale (pz)</th>
+                                <th>Stanza</th>
+                                <th>Zona</th>
+                                <th>Ripiano</th>
+                                <th>Scatola N</th>
+                                <th>Tipologia</th>
+                                <th>Data Ingresso</th>
+                                <th>Data Modifica</th>
+                                <th>Operatore</th>
+                                <th>Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Aggiungi/Modifica Articolo -->
+    <div class="modal fade" id="itemModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Aggiungi/Modifica Articolo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="itemForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label" for="codiceArticolo">Codice Articolo*</label>
+                                <input type="text" class="form-control" id="codiceArticolo" name="codiceArticolo" required aria-label="Codice Articolo">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="oggetto">Oggetto*</label>
+                                <input type="text" class="form-control" id="oggetto" name="oggetto" required aria-label="Oggetto">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="descrizione">Descrizione</label>
+                                <textarea class="form-control" id="descrizione" name="descrizione" rows="3" aria-label="Descrizione"></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="fornitore">Fornitore*</label>
+                                <input type="text" class="form-control" id="fornitore" name="fornitore" required aria-label="Fornitore">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="quantita">Quantità Totale (pz)*</label>
+                                <input type="number" class="form-control" id="quantita" name="quantita" required min="0" aria-label="Quantità Totale">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="stanza">Stanza*</label>
+                                <input type="text" class="form-control" id="stanza" name="stanza" required aria-label="Stanza">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="zona">Zona</label>
+                                <input type="text" class="form-control" id="zona" name="zona" aria-label="Zona">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="ripiano">Ripiano</label>
+                                <input type="text" class="form-control" id="ripiano" name="ripiano" aria-label="Ripiano">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="scatola">Scatola N</label>
+                                <input type="text" class="form-control" id="scatola" name="scatola" aria-label="Scatola">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="tipologia">Tipologia*</label>
+                                <input type="text" class="form-control" id="tipologia" name="tipologia" required aria-label="Tipologia">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="dataIngresso">Data in ingresso*</label>
+                                <input type="text" class="form-control" id="dataIngresso" name="dataIngresso" required aria-label="Data in ingresso">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="operatore">Operatore*</label>
+                                <input type="text" class="form-control" id="operatore" name="operatore" required aria-label="Operatore">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                    <button type="button" class="btn btn-primary" id="saveItem">Salva</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Importa TXT -->
+    <div class="modal fade" id="importModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Importa File TXT</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <div class="drop-zone" id="dropZone">
+                            <p>Trascina qui il file TXT o</p>
+                            <button type="button" class="btn btn-outline-primary" id="selectFile">
+                                Seleziona File
+                            </button>
+                            <input type="file" id="fileInput" accept=".txt" hidden>
+                        </div>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="replaceEmpty" checked>
+                        <label class="form-check-label" for="replaceEmpty">
+                            Sostituisci campi vuoti con "N.A."
+                        </label>
+                    </div>
+                    <div id="previewArea" class="d-none">
+                        <h6>Anteprima dati:</h6>
+                        <div class="table-responsive">
+                            <table class="table table-sm" id="previewTable">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                    <button type="button" class="btn btn-primary" id="confirmImport">Conferma Import</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Conferma Eliminazione -->
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Conferma Eliminazione</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Sei sicuro di voler eliminare questo articolo?</p>
+                    <p>Questa azione non può essere annullata.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">Elimina</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/it.js"></script>
+    <script src="js/labinventory.js"></script>
+</body>
+</html> 
