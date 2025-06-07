@@ -1,6 +1,6 @@
 # Laboratory Inventory System
 
-Un'applicazione web per la gestione dell'inventario di laboratorio, che consente di tracciare articoli, posizioni e quantità.
+A web application for laboratory inventory management that allows tracking items, locations, and quantities.
 
 <div align="center">
   <img src="https://img.shields.io/badge/Flask-2.3.3-blue.svg" alt="Flask Version">
@@ -9,147 +9,147 @@ Un'applicazione web per la gestione dell'inventario di laboratorio, che consente
   <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License">
 </div>
 
-## Indice dei Contenuti
+## Table of Contents
 
-- [Funzionalità](#funzionalità)
-- [Tecnologie Utilizzate](#tecnologie-utilizzate)
-- [Requisiti](#requisiti)
-- [Installazione](#installazione)
-- [Struttura del Progetto](#struttura-del-progetto)
-- [Utilizzo](#utilizzo)
-- [Architettura dell'Applicazione](#architettura-dellapplicazione)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Project Structure](#project-structure)
+- [Usage](#usage)
+- [Application Architecture](#application-architecture)
 - [API Endpoints](#api-endpoints)
-- [Utilizzo del Sistema](#utilizzo-del-sistema)
+- [System Usage](#system-usage)
 - [Deployment](#deployment)
-- [Risoluzione dei Problemi](#risoluzione-dei-problemi)
+- [Troubleshooting](#troubleshooting)
 
-## Funzionalità
+## Features
 
-- Visualizzazione, aggiunta, modifica ed eliminazione di articoli
-- Filtri per tipologia, fornitore, stanza, zona, ripiano, scatola e quantità
-- Ricerca globale con opzione di corrispondenza esatta
-- Importazione dati da file TXT (formato tabulare)
-- Esportazione dati in formato TSV
-- Generazione automatica di report JSON durante l'importazione
-- Salvataggio persistente dei dati su file JSON
-- Registrazione completa di tutte le modifiche all'inventario
-- Backup automatico dei dati prima di ogni modifica
-- Interfaccia responsive con opzioni di zoom per la tabella
-- Sincronizzazione automatica tra dispositivi multipli
+- View, add, edit, and delete items
+- Filter by type, supplier, room, area, shelf, box, and quantity
+- Global search with exact match option
+- Import data from TXT files (tabular format)
+- Export data in TSV format
+- Automatic JSON report generation during imports
+- Persistent data storage in JSON files
+- Complete logging of all inventory changes
+- Automatic data backup before each modification
+- Responsive interface with zoom options for the table
+- Automatic synchronization between multiple devices
 
-## Tecnologie Utilizzate
+## Technologies Used
 
-| Categoria | Tecnologie |
+| Category | Technologies |
 |-----------|------------|
 | **Frontend** | HTML5, CSS3, JavaScript, Bootstrap 5, DataTables, jQuery, Flatpickr |
 | **Backend** | Flask (Python 3.7+), Werkzeug |
-| **Storage** | File JSON con tracking delle modifiche |
+| **Storage** | JSON files with change tracking |
 | **Deployment** | Nginx/Apache, Gunicorn |
 
-## Requisiti
+## Requirements
 
-- Python 3.7 o superiore
+- Python 3.7 or higher
 - Flask 2.3.3
 - Werkzeug 2.3.7
-- Browser web moderno con supporto JavaScript
+- Modern web browser with JavaScript support
 
-## Installazione
+## Installation
 
-1. Clona il repository:
+1. Clone the repository:
    ```bash
    git clone https://github.com/GrennMilo/Lab_Inventory.git
    cd Lab_Inventory
    ```
 
-2. Installa le dipendenze:
+2. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
-3. Avvia l'applicazione:
+3. Launch the application:
    ```bash
    python app.py
    ```
 
-4. Apri il browser e naviga a `http://localhost:5000`
+4. Open your browser and navigate to `http://localhost:5000`
 
-## Struttura del Progetto
+## Project Structure
 
 ```
 Lab Inventory/
-├── app.py                  # Applicazione Flask principale
-├── requirements.txt        # Dipendenze Python
-├── .gitignore              # File di configurazione Git
-├── static/                 # File statici
+├── app.py                  # Main Flask application
+├── requirements.txt        # Python dependencies
+├── .gitignore              # Git configuration file
+├── static/                 # Static files
 │   ├── css/
-│   │   └── labinventory.css # Fogli di stile
+│   │   └── labinventory.css # Stylesheets
 │   └── js/
-│       └── labinventory.js  # Logica JavaScript
+│       └── labinventory.js  # JavaScript logic
 ├── templates/
-│   └── labinventory.html   # Template HTML principale
-├── reports/                # Directory per i dati JSON (gitignored)
-│   ├── current_inventory.json  # File principale dell'inventario
-│   ├── edit_history.json       # Storico delle modifiche
-│   └── ...                     # Report generati dalle importazioni
-└── README.md               # Documentazione
+│   └── labinventory.html   # Main HTML template
+├── reports/                # Directory for JSON data (gitignored)
+│   ├── current_inventory.json  # Main inventory file
+│   ├── edit_history.json       # Change history log
+│   └── ...                     # Reports generated from imports
+└── README.md               # Documentation
 ```
 
-## Utilizzo
+## Usage
 
-### Aggiunta di Articoli
+### Adding Items
 
-1. Clicca sul pulsante "Abilita Modifica" per attivare la modalità di modifica
-2. Clicca sul pulsante "Aggiungi Articolo"
-3. Compila il modulo con i dettagli dell'articolo
-4. Clicca su "Salva"
+1. Click the "Enable Edit" button to activate edit mode
+2. Click the "Add Item" button
+3. Fill out the form with item details
+4. Click "Save"
 
-### Importazione di Dati
+### Importing Data
 
-1. Clicca sul pulsante "Importa TXT"
-2. Trascina un file TXT o clicca su "Seleziona File"
-3. Verifica l'anteprima dei dati
-4. Clicca su "Conferma Import"
-5. Un report JSON sarà automaticamente generato nella cartella "reports"
+1. Click the "Import TXT" button
+2. Drag a TXT file or click "Select File"
+3. Verify the data preview
+4. Click "Confirm Import"
+5. A JSON report will be automatically generated in the "reports" folder
 
-### Esportazione di Dati
+### Exporting Data
 
-1. Clicca sul pulsante "Esporta TSV" per scaricare i dati in formato tabulare
+1. Click the "Export TSV" button to download the data in tabular format
 
-### Filtri e Ricerca
+### Filters and Search
 
-- Utilizza i filtri nella sezione superiore per filtrare gli articoli per categoria
-- Utilizza la barra di ricerca per cercare testo in qualsiasi campo
+- Use the filters in the top section to filter items by category
+- Use the search bar to search for text in any field
 
-### Salvataggio delle Modifiche
+### Saving Changes
 
-Le modifiche vengono salvate automaticamente in due casi:
-1. Quando si modifica un singolo articolo, premendo Invio o passando a un altro campo
-2. Quando si disabilita la modalità modifica (pulsante "Disabilita Modifica")
+Changes are automatically saved in two cases:
+1. When modifying a single item, by pressing Enter or moving to another field
+2. When disabling edit mode (the "Disable Edit" button)
 
-Tutte le modifiche vengono registrate nel file `edit_history.json` con dettagli su:
-- Data e ora della modifica
-- Tipo di modifica (aggiunta, modifica, eliminazione)
-- Utente che ha effettuato la modifica
-- Dettagli degli articoli modificati
+All changes are recorded in the `edit_history.json` file with details on:
+- Date and time of the change
+- Type of change (add, edit, delete)
+- User who made the change
+- Details of the modified items
 
-### Accesso Multi-dispositivo
+### Multi-device Access
 
-L'inventario è accessibile da più dispositivi contemporaneamente. Tutti i dispositivi visualizzano gli stessi dati aggiornati, salvati nei file JSON sul server.
+The inventory is accessible from multiple devices simultaneously. All devices display the same updated data, saved in JSON files on the server.
 
-## Architettura dell'Applicazione
+## Application Architecture
 
-L'applicazione segue un'architettura client-server con i seguenti componenti principali:
+The application follows a client-server architecture with the following main components:
 
 ```mermaid
 flowchart TD
     subgraph Client
-        UI["Interfaccia Utente (Browser)"]
+        UI["User Interface (Browser)"]
         JS["JavaScript (labinventory.js)"]
     end
     
     subgraph Server
         FLK["Flask Server (app.py)"]
-        API["API REST"]
+        API["REST API"]
         DB["File Storage (JSON)"]
     end
     
@@ -168,101 +168,101 @@ flowchart TD
     DB --- JSON_Files
 ```
 
-Il flusso di dati è organizzato come segue:
-1. Il client richiede i dati tramite API REST
-2. Il server carica i dati dai file JSON
-3. L'utente interagisce con l'interfaccia e modifica i dati
-4. Le modifiche vengono inviate al server tramite API REST
-5. Il server salva le modifiche, crea backup e registra la cronologia
+The data flow is organized as follows:
+1. The client requests data via REST API
+2. The server loads data from JSON files
+3. The user interacts with the interface and modifies data
+4. Changes are sent to the server via REST API
+5. The server saves changes, creates backups, and records history
 
-### Componenti del Backend
+### Backend Components
 
-Il backend Flask gestisce le seguenti funzionalità:
+The Flask backend handles the following functionalities:
 
-| Componente | Funzione |
+| Component | Function |
 |------------|----------|
-| **API REST** | Gestisce le richieste HTTP dal client |
-| **Gestore Inventario** | Carica e salva i dati dell'inventario |
-| **Sistema di Backup** | Crea backup prima di ogni modifica |
-| **Sistema di Tracking** | Registra tutte le modifiche nel file di storia |
-| **Gestore Report** | Genera e serve i report in formato JSON |
+| **REST API** | Handles HTTP requests from the client |
+| **Inventory Manager** | Loads and saves inventory data |
+| **Backup System** | Creates backups before each modification |
+| **Tracking System** | Records all changes in the history file |
+| **Report Manager** | Generates and serves reports in JSON format |
 
-### Componenti del Frontend
+### Frontend Components
 
-Il frontend è costruito con le seguenti tecnologie e componenti:
+The frontend is built with the following technologies and components:
 
-| Componente | Tecnologia | Funzione |
+| Component | Technology | Function |
 |------------|------------|----------|
-| **Tabella Inventario** | DataTables | Visualizzazione e interazione con i dati |
-| **Form di Modifica** | Bootstrap 5 | Aggiunta e modifica degli articoli |
-| **Filtri** | DataTables + Custom JS | Filtro multi-criterio dei dati |
-| **Importazione TXT** | JavaScript | Caricamento e parsing di file TXT |
-| **Esportazione TSV** | DataTables | Esportazione dei dati in formato tabulare |
+| **Inventory Table** | DataTables | Display and interaction with data |
+| **Edit Form** | Bootstrap 5 | Adding and editing items |
+| **Filters** | DataTables + Custom JS | Multi-criteria data filtering |
+| **TXT Import** | JavaScript | Loading and parsing TXT files |
+| **TSV Export** | DataTables | Exporting data in tabular format |
 
 ## API Endpoints
 
-| Endpoint | Metodo | Descrizione | Parametri | Risposta |
+| Endpoint | Method | Description | Parameters | Response |
 |----------|--------|-------------|-----------|----------|
-| `/api/health` | GET | Verifica lo stato dell'applicazione | - | `{"status": "ok", "message": "..."}` |
-| `/api/inventory` | GET | Ottieni tutti i dati dell'inventario | - | `{"items": [...]}` |
-| `/api/inventory` | POST | Aggiorna tutti i dati dell'inventario | `{"items": [...]}` | `{"status": "success", "message": "..."}` |
-| `/api/inventory/item` | POST | Aggiungi un nuovo articolo | `{oggetto articolo}` | `{"status": "success", "item": {...}}` |
-| `/api/inventory/item/<id>` | PUT | Aggiorna un articolo esistente | `{oggetto articolo}` | `{"status": "success", "item": {...}}` |
-| `/api/inventory/item/<id>` | DELETE | Elimina un articolo | - | `{"status": "success", "message": "..."}` |
-| `/api/history` | GET | Ottieni lo storico delle modifiche | - | `{"edits": [...]}` |
-| `/api/save-report` | POST | Salva report da importazione | `{"items": [...], "filename": "..."}` | `{"status": "success", "filepath": "..."}` |
-| `/reports` | GET | Lista dei report disponibili | - | `{"reports": [...]}` |
-| `/reports/<filename>` | GET | Scarica un report specifico | - | Contenuto JSON |
+| `/api/health` | GET | Check application status | - | `{"status": "ok", "message": "..."}` |
+| `/api/inventory` | GET | Get all inventory data | - | `{"items": [...]}` |
+| `/api/inventory` | POST | Update all inventory data | `{"items": [...]}` | `{"status": "success", "message": "..."}` |
+| `/api/inventory/item` | POST | Add a new item | `{item object}` | `{"status": "success", "item": {...}}` |
+| `/api/inventory/item/<id>` | PUT | Update an existing item | `{item object}` | `{"status": "success", "item": {...}}` |
+| `/api/inventory/item/<id>` | DELETE | Delete an item | - | `{"status": "success", "message": "..."}` |
+| `/api/history` | GET | Get the edit history | - | `{"edits": [...]}` |
+| `/api/save-report` | POST | Save report from import | `{"items": [...], "filename": "..."}` | `{"status": "success", "filepath": "..."}` |
+| `/reports` | GET | List of available reports | - | `{"reports": [...]}` |
+| `/reports/<filename>` | GET | Download a specific report | - | JSON Content |
 
-## Utilizzo del Sistema
+## System Usage
 
-### Login e Controllo Accessi
+### Login and Access Control
 
-Al momento l'applicazione utilizza un sistema di autenticazione basato su username, che viene salvato come identificativo dell'operatore per tracciare le modifiche. Per implementare un sistema di login completo:
+Currently, the application uses a username-based authentication system, which is saved as the operator's identifier to track changes. To implement a complete login system:
 
-1. Accedere alla pagina principale dell'applicazione
-2. Inserire il proprio nome utente quando richiesto
-3. Il nome utente verrà salvato e associato a tutte le modifiche apportate
+1. Access the main page of the application
+2. Enter your username when prompted
+3. The username will be saved and associated with all changes made
 
-### Operazioni Base
+### Basic Operations
 
-L'applicazione supporta le seguenti operazioni di base:
+The application supports the following basic operations:
 
-1. **Visualizzazione dell'inventario**:
-   - Accedere alla pagina principale per visualizzare tutti gli articoli
-   - Utilizzare i filtri per restringere la visualizzazione
-   - Cambiare il livello di zoom con il selettore dedicato
+1. **View inventory**:
+   - Access the main page to view all items
+   - Use filters to narrow the view
+   - Change the zoom level with the dedicated selector
 
-2. **Aggiunta di un nuovo articolo**:
-   - Attivare la modalità di modifica con il pulsante "Abilita Modifica"
-   - Fare clic su "Aggiungi Articolo"
-   - Compilare il modulo con i dettagli dell'articolo
-   - Fare clic su "Salva"
+2. **Add a new item**:
+   - Activate edit mode with the "Enable Edit" button
+   - Click "Add Item"
+   - Fill out the form with item details
+   - Click "Save"
 
-3. **Modifica di un articolo esistente**:
-   - Attivare la modalità di modifica
-   - Fare clic direttamente sulla cella da modificare oppure
-   - Utilizzare il pulsante di modifica nella colonna "Azioni"
-   - Apportare le modifiche e salvare
+3. **Edit an existing item**:
+   - Activate edit mode
+   - Click directly on the cell to edit or
+   - Use the edit button in the "Actions" column
+   - Make changes and save
 
-4. **Eliminazione di un articolo**:
-   - Attivare la modalità di modifica
-   - Fare clic sul pulsante di eliminazione nella colonna "Azioni"
-   - Confermare l'eliminazione nella finestra di dialogo
+4. **Delete an item**:
+   - Activate edit mode
+   - Click the delete button in the "Actions" column
+   - Confirm the deletion in the dialog box
 
-5. **Importazione dati da file TXT**:
-   - Fare clic su "Importa TXT"
-   - Trascinare un file TXT nell'area dedicata o selezionarlo tramite browser
-   - Controllare l'anteprima dei dati
-   - Fare clic su "Conferma Importazione"
+5. **Import data from TXT file**:
+   - Click "Import TXT"
+   - Drag a TXT file into the dedicated area or select it via browser
+   - Check the data preview
+   - Click "Confirm Import"
 
-### Struttura dei Dati
+### Data Structure
 
-La struttura dei dati dell'inventario segue questo schema:
+The inventory data structure follows this schema:
 
 ```mermaid
 erDiagram
-    INVENTARIO {
+    INVENTORY {
         string codiceArticolo PK
         string oggetto
         string descrizione
@@ -278,7 +278,7 @@ erDiagram
         string operatore
     }
     
-    STORIA {
+    HISTORY {
         string id PK
         datetime timestamp
         string action
@@ -290,28 +290,28 @@ erDiagram
 
 ## Deployment
 
-### Requisiti di Sistema
+### System Requirements
 
-Per eseguire l'applicazione in produzione sono necessari:
+To run the application in production, you need:
 
-- Python 3.7 o superiore
-- Flask 2.3.3 o superiore
-- Un server web (Nginx o Apache) per l'ambiente di produzione
-- Almeno 100 MB di spazio su disco per l'applicazione e i file JSON
-- Connessione di rete per l'accesso multi-dispositivo
+- Python 3.7 or higher
+- Flask 2.3.3 or higher
+- A web server (Nginx or Apache) for the production environment
+- At least 100 MB of disk space for the application and JSON files
+- Network connection for multi-device access
 
-### Configurazione per la Produzione
+### Production Configuration
 
-Per configurare l'applicazione in un ambiente di produzione:
+To configure the application in a production environment:
 
-1. **Installazione delle dipendenze**:
+1. **Install dependencies**:
    ```bash
    pip install -r requirements.txt
    pip install gunicorn
    ```
 
-2. **Configurazione del server web**:
-   Per Nginx, aggiungere un blocco server:
+2. **Web server configuration**:
+   For Nginx, add a server block:
    ```nginx
    server {
        listen 80;
@@ -325,13 +325,13 @@ Per configurare l'applicazione in un ambiente di produzione:
    }
    ```
 
-3. **Avvio dell'applicazione con WSGI**:
+3. **Start the application with WSGI**:
    ```bash
    gunicorn -w 4 -b 127.0.0.1:5000 app:app
    ```
 
-4. **Configurazione di un servizio systemd**:
-   Creare un file `/etc/systemd/system/labinventory.service`:
+4. **Configure a systemd service**:
+   Create a file `/etc/systemd/system/labinventory.service`:
    ```ini
    [Unit]
    Description=Lab Inventory Flask Application
@@ -347,55 +347,55 @@ Per configurare l'applicazione in un ambiente di produzione:
    WantedBy=multi-user.target
    ```
 
-   Attivare il servizio:
+   Activate the service:
    ```bash
    sudo systemctl enable labinventory
    sudo systemctl start labinventory
    ```
 
-### Performance e Sicurezza
+### Performance and Security
 
-| Aspetto | Raccomandazione |
+| Aspect | Recommendation |
 |---------|-----------------|
-| **Backup** | Configurare backup giornalieri esterni alla directory dell'applicazione |
-| **SSL/TLS** | Implementare HTTPS con Let's Encrypt per connessioni sicure |
-| **Autenticazione** | Implementare un sistema di login completo per ambienti multi-utente |
-| **Rate Limiting** | Configurare limiti di richiesta per prevenire abusi dell'API |
-| **Monitoraggio** | Utilizzare strumenti come Prometheus/Grafana per monitorare l'applicazione |
+| **Backup** | Configure daily backups external to the application directory |
+| **SSL/TLS** | Implement HTTPS with Let's Encrypt for secure connections |
+| **Authentication** | Implement a complete login system for multi-user environments |
+| **Rate Limiting** | Configure request limits to prevent API abuse |
+| **Monitoring** | Use tools like Prometheus/Grafana to monitor the application |
 
-## Risoluzione dei Problemi
+## Troubleshooting
 
-### Problemi Comuni
+### Common Issues
 
-| Problema | Soluzione |
+| Problem | Solution |
 |----------|-----------|
-| **Errore di caricamento dati** | Verificare i permessi dei file JSON nella directory `reports/` |
-| **Sincronizzazione non funzionante** | Verificare che tutti i dispositivi siano connessi alla stessa rete |
-| **Performance lente** | Ridurre la dimensione dei file JSON eliminando vecchi backup |
-| **Crash dell'applicazione** | Controllare i log in `/var/log/labinventory/app.log` |
+| **Data loading error** | Check JSON file permissions in the `reports/` directory |
+| **Synchronization not working** | Verify all devices are connected to the same network |
+| **Slow performance** | Reduce JSON file size by deleting old backups |
+| **Application crash** | Check the logs in `/var/log/labinventory/app.log` |
 
-### Contatti per Supporto
+### Support Contacts
 
-Per assistenza tecnica contattare:
+For technical assistance, contact:
 - Email: support@labinventory.example.com
-- Telefono: +39 0123 456789
-- Orari: Lun-Ven 9:00-18:00
+- Phone: +39 0123 456789
+- Hours: Mon-Fri 9:00-18:00
 
 ---
 
-## Contribuire al Progetto
+## Contributing to the Project
 
-Le contribuzioni sono benvenute! Per contribuire:
+Contributions are welcome! To contribute:
 
-1. Fai un fork del repository
-2. Crea un branch per la tua funzionalità (`git checkout -b feature/NuovaFunzionalità`)
-3. Fai commit delle tue modifiche (`git commit -m 'Aggiungi NuovaFunzionalità'`)
-4. Pusha il branch (`git push origin feature/NuovaFunzionalità`)
-5. Apri una Pull Request
+1. Fork the repository
+2. Create a branch for your feature (`git checkout -b feature/NewFeature`)
+3. Commit your changes (`git commit -m 'Add NewFeature'`)
+4. Push the branch (`git push origin feature/NewFeature`)
+5. Open a Pull Request
 
-## Licenza
+## License
 
-Questo progetto è distribuito con licenza MIT. Vedi il file `LICENSE` per maggiori dettagli.
+This project is distributed under the MIT license. See the `LICENSE` file for more details.
 
 ---
 
